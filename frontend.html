@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pattern App Frontend</title></head>
+<body style="font-family:Arial,Helvetica,sans-serif;padding:16px;background:#071022;color:#e7f0ff">
+  <h2>Pattern App — Frontend</h2>
+  <p>Tekan tombol untuk fetch dari API utama: <code>/api/pattern</code></p>
+  <div style="margin-bottom:8px"><button id="go">Fetch Pattern</button> <button id="open">Open API in new tab</button></div>
+  <pre id="out" style="background:#001020;padding:12px;border-radius:8px;min-height:120px"></pre>
+  <script>
+    document.getElementById('go').addEventListener('click', async ()=>{
+      document.getElementById('out').textContent = 'Fetching...';
+      try{
+        const res = await fetch('/api/pattern');
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const j = await res.json();
+        document.getElementById('out').textContent = JSON.stringify(j, null, 2);
+      }catch(e){ document.getElementById('out').textContent = 'Error: '+e.message; }
+    });
+    document.getElementById('open').addEventListener('click', ()=>window.open('/api/pattern','_blank'));
+  </script>
+</body>
+</html>
